@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         lowercase: true // Automatically fixes casing differences to prevent login failures
     },
     phoneNumber: {
-        type: String, // 🔥 FIXED: Changed from Number to String to support leading zeros and prefixes (+91)
+        type: String, // Changed from Number to String to support leading zeros and prefixes
         required: [true, "Phone number is required."],
         trim: true
     },
@@ -46,9 +46,7 @@ const userSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-// ==========================================
-// 🚀 PRODUCTION USER INDEXING LAYER
-// ==========================================
+// USER INDEXING LAYER
 
 // 1. Speeds up nested subdocument lookups for corporate dashboards
 userSchema.index({ "profile.company": 1 }, { sparse: true }); // Sparse ensures null student fields skip compilation indexing files

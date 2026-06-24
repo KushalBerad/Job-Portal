@@ -12,7 +12,7 @@ const isAuthenticated = async (req, res, next) => {
             });
         }
 
-        // 2. Fixed key mismatch & handled synchronous execution safely
+        // 2.key mismatch & handled synchronous execution safely
         // Wrap in a try-catch pattern or let the outer catch block intercept JWT library errors
         const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
 

@@ -1,11 +1,11 @@
 import multer from "multer";
 import path from "path";
 
-// 1. Configure memory allocation architecture
+// 1. Configure memory allocation
 const storage = multer.memoryStorage();
 
 // 2. Define strict validation rules
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // Strict 5MB size ceiling to protect RAM allocation
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // Strict 5MB size
 const ALLOWED_EXTENSIONS = /jpeg|jpg|png|pdf|docx|doc/;
 
 // 3. Built-in file type filtering engine
@@ -17,7 +17,7 @@ const fileFilter = (req, file, cb) => {
     if (extname && mimetype) {
         return cb(null, true);
     } else {
-        // Return a clean error instead of breaking the execution thread
+        // Return a error
         return cb(new Error("Invalid file format. Only images (JPG, PNG) and documents (PDF, DOCX) are allowed."));
     }
 };
@@ -31,7 +31,7 @@ export const singleUpload = (fieldName = "file") => {
             fileFilter: fileFilter
         }).single(fieldName); // Dynamic field configuration eliminates frontend naming dependencies
 
-        // Intercept and handle errors locally within the middleware pipeline
+        // Intercept and handle errors locally 
         upload(req, res, (err) => {
             if (err instanceof multer.MulterError) {
                 if (err.code === "LIMIT_FILE_SIZE") {
@@ -45,7 +45,6 @@ export const singleUpload = (fieldName = "file") => {
                 // Captures custom file validation error thrown inside fileFilter
                 return res.status(400).json({ message: err.message, success: false });
             }
-            // If everything passes smoothly, transfer processing control to the next handler
             next();
         });
     };

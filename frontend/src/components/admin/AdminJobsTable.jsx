@@ -1,22 +1,20 @@
-import React, { useMemo } from 'react';
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Edit2, Eye, MoreHorizontal } from 'lucide-react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 
 const AdminJobsTable = () => { 
     const { allAdminJobs = [], searchJobByText = "" } = useSelector(store => store.job);
     const navigate = useNavigate();
 
-    // 🚀 Performance Win: Compute filtered results on the fly without extra state/effects
     const filteredJobs = useMemo(() => {
         return allAdminJobs.filter((job) => {
             if (!searchJobByText.trim()) return true;
 
             const searchLower = searchJobByText.toLowerCase();
             const jobTitle = job?.title?.toLowerCase() || "";
-            // Safe navigation protection against deleted or missing company entities
             const companyName = job?.company?.name?.toLowerCase() || ""; 
 
             return jobTitle.includes(searchLower) || companyName.includes(searchLower);
@@ -44,9 +42,8 @@ const AdminJobsTable = () => {
                         </TableRow>
                     ) : (
                         filteredJobs.map((job) => (
-                            // Fixed: Added unique key identifier to protect DOM rendering stability
+                            
                             <TableRow key={job._id || Math.random()} className="hover:bg-gray-50/50 transition-colors">
-                                {/* Fixed: Enforced consistent Shadcn/ui custom table markup naming wrappers */}
                                 <TableCell className="font-medium text-gray-900">
                                     {job?.company?.name || "N/A"}
                                 </TableCell>

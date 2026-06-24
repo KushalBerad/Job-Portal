@@ -1,6 +1,4 @@
-// ==========================================
-// 💼 JOB SCHEMA
-// ==========================================
+// JOB SCHEMA
 import mongoose from "mongoose";
 
 const jobSchema = new mongoose.Schema({
@@ -57,12 +55,9 @@ const jobSchema = new mongoose.Schema({
         ref: 'Application'
     }
 ]
-    // 🔥 FIXED: 'applications' array completely REMOVED to prevent document size inflation.
 }, { timestamps: true });
 
-// ==========================================
-// 🚀 PRODUCTION JOB INDEXING LAYER
-// ==========================================
+// JOB INDEXING LAYER
 
 // 1. Speeds up filtered search feeds (Job boards)
 jobSchema.index({ location: 1, jobType: 1 });

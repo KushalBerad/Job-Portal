@@ -23,10 +23,6 @@ const applicationSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-// ==========================================
-// 🚀 PRODUCTION DATABASE INDEXING LAYER
-// ==========================================
-
 // 1. Foolproof protection against race-condition duplicate applications
 applicationSchema.index({ job: 1, applicant: 1 }, { unique: true });
 

@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 
-// ==========================================
-// 🏢 COMPANY SCHEMA
-// ==========================================
+// COMPANY SCHEMA
+
 const companySchema = new mongoose.Schema({
     name: {
         type: String,
@@ -32,7 +31,7 @@ const companySchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-// 🚀 Indexing for instant loading of a recruiter's dashboard
+// Indexing for instant loading of a recruiter's dashboard
 companySchema.index({ userId: 1 });
 
 
